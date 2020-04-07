@@ -1,4 +1,4 @@
-# # Projet d'Interface puissance système du semestre 7
+# Projet d'Interface puissance système du semestre 7
 
 ----
 ## Le sujet
