@@ -13,32 +13,32 @@ import platform
 
 # données
 Pelec = 15  # Puissance electrique en W
-T0 = 290  # Température visée [40,290]
-T1 = 15  # Condition initiale : température à t=0
-C = 433  # Capacité thermique du système
-H = 5.5  # Coefficient de transfert thermique
+T0 = 20  # Valeur initiale
+C = 43.3  # Capacité thermique du système
+H = 0.3  # Coefficient de transfert thermique
 
 
-def T(t):
-    a = (T1-T0)-(Pelec/H)
-    b = -(H/C)
-    c = T0 + (Pelec/H)
-    return a*np.exp(b*t)+c
+def T(t, last, step):
+    if(t == 0):
+        return T0
+    else:
+        return (last + ((Pelec - H*(last - T0))/C)*step)
 
 
 def drawTemperature(x, y, limit, step):
     current_abs = 0
-    for t in range(limit+1):
-        while(current_abs < t):
-            x.append(current_abs)
-            y.append(T(current_abs))
-            current_abs += step
+    last = 0
+    while current_abs < limit:
+        x.append(current_abs)
+        y.append(T(current_abs, last, step))
+        last = y[-1]
+        current_abs += step
 
 
 def plotTemperature(x, y):
     plt.plot(x, y)
     plt.grid()
-    plt.xlabel("Temps (s)")
+    plt.xlabel("k")
     plt.ylabel("Température (°C)")
     plt.title("Evolution de la température pour Pelec = " +
               str(float(Pelec)) + "W")
@@ -64,10 +64,10 @@ def getLimit():
 
 
 def getStep():
-    print('Quel pas de simulation voulez-vous choisir ? (defaut = 0.1)\n')
+    print('Quel pas de simulation voulez-vous choisir ? (defaut = 1)\n')
     step = input('pas = ')
     if(step == ""):
-        step = 0.1
+        step = 1
     else:
         step = float(step)
     print('\n\n')
