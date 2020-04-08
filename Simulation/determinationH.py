@@ -18,27 +18,27 @@ C = 43.3  # Capacité thermique du système
 H = 0.3  # Coefficient de transfert thermique
 
 
-def T(t, last, step):
+def T(t, last, Te):
     if(t == 0):
         return T0
     else:
-        return (last + ((Pelec - H*(last - T0))/C)*step)
+        return (last + ((Pelec - H*(last - T0))/C)*Te)
 
 
 def drawTemperature(x, y, limit, step):
-    current_abs = 0
+    n = 0
     last = 0
-    while current_abs < limit:
-        x.append(current_abs)
-        y.append(T(current_abs, last, step))
+    for n in range(0, limit+1):
+        x.append(n)
+        y.append(T(n, last, step))
         last = y[-1]
-        current_abs += step
+        n += 1
 
 
-def plotTemperature(x, y):
+def plotTemperature(x, y, Te):
     plt.plot(x, y)
     plt.grid()
-    plt.xlabel("k")
+    plt.xlabel("nTe (avec Te = " + str(Te) + " s)")
     plt.ylabel("Température (°C)")
     plt.title("Evolution de la température pour Pelec = " +
               str(float(Pelec)) + "W")
@@ -53,35 +53,35 @@ def clear():
 
 
 def getLimit():
-    print('Sur combien de secondes voulez vous effectuer la simulation ? (defaut = 300)\n')
+    print('Sur combien de secondes voulez vous effectuer la simulation ? (defaut = 4000)\n')
     limit = input('limite = ')
     if(limit == ""):
-        limit = 300
+        limit = 4000
     else:
         limit = int(limit)
     print('\n\n')
     return limit
 
 
-def getStep():
-    print('Quel pas de simulation voulez-vous choisir ? (defaut = 1)\n')
-    step = input('pas = ')
-    if(step == ""):
-        step = 1
+def getTe():
+    print("Quel période d'échantillonage voulez-vous choisir ? (defaut = 0.2)\n")
+    Te = input('Te = ')
+    if(Te == ""):
+        Te = 0.2
     else:
-        step = float(step)
+        Te = float(Te)
     print('\n\n')
-    return step
+    return Te
 
 
 def main():
     clear()
     limit = getLimit()
-    step = getStep()
+    Te = getTe()
     x = []  # Ensemble des valeurs de t
     y = []  # Ensemble des valeurs de T(t)
-    drawTemperature(x, y, limit, step)
-    plotTemperature(x, y)
+    drawTemperature(x, y, limit, Te)
+    plotTemperature(x, y, Te)
 
 
 if __name__ == "__main__":
