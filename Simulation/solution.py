@@ -25,7 +25,7 @@ def T(t):
     return a*np.exp(b*t)+c
 
 
-def drawTemperature(x, y, limit, step):
+def draw_temperature(x, y, limit, step):
     current_abs = 0
     while(current_abs <= limit):
         x.append(current_abs)
@@ -33,7 +33,7 @@ def drawTemperature(x, y, limit, step):
         current_abs += step
 
 
-def plotTemperature(x, y):
+def plot_temperature(x, y):
     plt.plot(x, y)
     plt.grid()
     plt.xlabel("Temps (s)")
@@ -50,7 +50,7 @@ def clear():
         os.system("clear")
 
 
-def getLimit():
+def get_limit():
     print('Sur combien de secondes voulez vous effectuer la simulation ? (defaut = 300)\n')
     limit = input('limite = ')
     if(limit == ""):
@@ -61,7 +61,7 @@ def getLimit():
     return limit
 
 
-def getStep():
+def get_step():
     print('Quel pas de simulation voulez-vous choisir ? (defaut = 0.1)\n')
     step = input('pas = ')
     if(step == ""):
@@ -74,12 +74,12 @@ def getStep():
 
 def main():
     clear()
-    limit = getLimit()
-    step = getStep()
+    limit = get_limit()
+    step = get_step()
     x = []  # Ensemble des valeurs de t
     y = []  # Ensemble des valeurs de T(t)
-    drawTemperature(x, y, limit, step)
-    plotTemperature(x, y)
+    draw_temperature(x, y, limit, step)
+    plot_temperature(x, y)
 
 
 if __name__ == "__main__":

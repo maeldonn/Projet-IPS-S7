@@ -25,7 +25,7 @@ def T(t, last, Te):
         return (last + ((Pelec - H*(last - T0))/C)*Te)
 
 
-def drawTemperature(x, y, limit, step):
+def draw_temperature(x, y, limit, step):
     n = 0
     last = 0
     for n in range(0, limit+1):
@@ -35,7 +35,7 @@ def drawTemperature(x, y, limit, step):
         n += 1
 
 
-def plotTemperature(x, y, Te):
+def plot_temperature(x, y, Te):
     plt.plot(x, y)
     plt.grid()
     plt.xlabel("nTe (avec Te = " + str(Te) + " s)")
@@ -52,7 +52,7 @@ def clear():
         os.system("clear")
 
 
-def getLimit():
+def get_limit():
     print('Sur combien de secondes voulez vous effectuer la simulation ? (defaut = 4000)\n')
     limit = input('limite = ')
     if(limit == ""):
@@ -63,7 +63,7 @@ def getLimit():
     return limit
 
 
-def getTe():
+def get_Te():
     print("Quel période d'échantillonage voulez-vous choisir ? (defaut = 0.2)\n")
     Te = input('Te = ')
     if(Te == ""):
@@ -76,12 +76,12 @@ def getTe():
 
 def main():
     clear()
-    limit = getLimit()
-    Te = getTe()
+    limit = get_limit()
+    Te = get_Te()
     x = []  # Ensemble des valeurs de t
     y = []  # Ensemble des valeurs de T(t)
-    drawTemperature(x, y, limit, Te)
-    plotTemperature(x, y, Te)
+    draw_temperature(x, y, limit, Te)
+    plot_temperature(x, y, Te)
 
 
 if __name__ == "__main__":
